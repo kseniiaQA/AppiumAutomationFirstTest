@@ -44,34 +44,39 @@ public class FirstTest {
 
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
-//
-//
-//    private WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {
-//        WebElement element = waitForElement(by, error_message, timeoutInSeconds);
-//        element.click();
-//        return element;
-//    }
-//
-//    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeoutInSeconds) {
-//        WebElement element = waitForElement(by, error_message, timeoutInSeconds);
-//        element.sendKeys(value);
-//        return element;
-//
-//
-//    }
-//
-//    private boolean webElementNotPresent(By by, String error_message, long timeoutInSeconds) {
-//        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
-//        wait.withMessage(error_message + "\n");
-//        return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
-//    }
-//
-//
-//    private WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds) {
-//        WebElement element = waitForElement(by, error_message, timeoutInSeconds);
-//        element.clear();
-//        return element;
-//    }
+
+    private WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElement(by, error_message, (int) timeoutInSeconds);
+        element.click();
+        return element;
+    }
+
+    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElement(by, error_message, (int) timeoutInSeconds);
+        element.sendKeys(value);
+        return element;
+
+
+    }
+
+    private boolean webElementNotPresent(By by, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+    }
+
+    private WebElement webElementPresent(By by, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+
+    private WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElement(by, error_message, (int) timeoutInSeconds);
+        element.clear();
+        return element;
+    }
 
     private WebElement assertElementHasText(By by, String expectedText, String error_message) {
         WebElement element = waitForElement(by,error_message, 15);
@@ -103,27 +108,27 @@ public class FirstTest {
 //    }
 //
 //
-//    @Test
-//    public void cancelSearch() {
-//
-//
-//        waitForElement(
-//                By.id("org.wikipedia:id/search_container"), "cannot find element", 5);
-//        waitForElementAndClick(
-//                By.id("org.wikipedia:id/search_container"), "cannot find element", 5);
-//
-//        waitForElementAndSendKeys(
-//                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
-//
-//        waitForElementAndClear(
-//                By.id("org.wikipedia:id/search_src_text"), "cannot find search field", 5);
-//
-//        waitForElementAndClick(
-//                By.id("org.wikipedia:id/search_close_btn"), "cannot find element", 5);
-//        webElementNotPresent(
-//                By.id("org.wikipedia:id/search_close_btn"), "element is still present on the page", 5);
-//
-//    }
+    @Test
+    public void cancelSearch() {
+
+
+        waitForElement(
+                By.id("org.wikipedia:id/search_container"), "cannot find element", 5);
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"), "cannot find element", 5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
+
+        webElementPresent(
+                By.id("org.wikipedia:id/page_list_item_description"), "cannot find element", 5);
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"), "cannot find element", 5);
+
+        webElementNotPresent(
+                By.id("org.wikipedia:id/page_list_item_description"), "cannot find element", 5);
+    }
 //
 //    @Test
 //    public void compareArticleTitle() {
