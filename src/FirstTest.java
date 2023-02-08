@@ -129,26 +129,27 @@ public class FirstTest {
         webElementNotPresent(
                 By.id("org.wikipedia:id/page_list_item_description"), "cannot find element", 5);
     }
-//
-//    @Test
-//    public void compareArticleTitle() {
-//        waitForElementAndClick(
-//                By.xpath("//*[@text='Search Wikipedia']"), "cannot find element", 5);
-//        waitForElementAndSendKeys(
-//                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[@text='Object-oriented programming language']"), "cannot find element", 5);
-//
-//        waitForElement(
-//                By.id("org.wikipedia:id/view_page_title_text"), "Cannot find article title", 15);
-//
-//        WebElement title_element = waitForElement(
-//                By.id("org.wikipedia:id/view_page_title_text"), "Cannot find article title", 15);
-//
-//        String article_title = title_element.getText();
-//        Assert.assertEquals("We see unexpected title", "Java (programming language)", article_title);
-//    }
+
+    @Test
+    public void wordSearch() {
+        waitForElementAndClick(
+                By.xpath("//*[@text='Search Wikipedia']"), "cannot find element", 5);
+        waitForElementAndSendKeys(
+                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
+
+        WebElement element1 = waitForElement(
+               By.xpath("//*[@text='Java']"), "Cannot find article title", 15);
+        Assert.assertTrue(element1.getText().contains("Java"));
+
+        WebElement element2 = waitForElement(
+                By.xpath("//*[@text='JavaScript']"), "Cannot find article title", 15);
+        Assert.assertTrue(element2.getText().contains("Java"));
+
+        WebElement element3 = waitForElement(
+                By.xpath("//*[@text='Java (programming language)']"), "Cannot find article title", 15);
+        Assert.assertTrue(element3.getText().contains("Java"));
+
+    }
 
 }
 
