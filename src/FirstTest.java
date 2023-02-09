@@ -109,7 +109,7 @@ public class FirstTest {
 //
 //
     @Test
-    public void cancelSearch() {
+    public void cancelSearchAndCheck() {
 
 
         waitForElement(
