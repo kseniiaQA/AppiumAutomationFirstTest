@@ -2,7 +2,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -23,11 +22,24 @@ public class FirstTest {
         capabilities.setCapability("deviceName", "emulator-5554");
         capabilities.setCapability("platformVersion", "11");
         capabilities.setCapability("automationName", "Appium");
-        capabilities.setCapability("appPackage", "org.wikipedia");
-        capabilities.setCapability("appActivity", ".main.MainActivity");
-        capabilities.setCapability("app", "C:/Users/kalekseenko/JavaAppiumAutomation/apks/org.wikipedia.apk");
+        capabilities.setCapability("appPackage", "ru.guptek.mobile_field_staff.dev");
+        capabilities.setCapability("appActivity", "ru.guptek.mobile_field_staff.ui.MainActivity");
+        capabilities.setCapability("app", "C:/Users/kalekseenko/GUPTEK_automation/apks/GUPTEK-Android-304083-dev-debug.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+
+        waitForElementAndClick
+                (By.xpath("//*[@text='While using the app']"), "Search Wikipedia", 5);
+        waitForElementAndClick
+                (By.xpath("//*[@text='While using the app']"), "Search Wikipedia", 5);
+        waitForElementAndClick
+                (By.xpath("//*[@text='While using the app']"), "Search Wikipedia", 5);
+
+        waitForElementAndClick
+                (By.xpath("//*[@text='Allow']"), "Search Wikipedia", 5);
+        waitForElementAndClick
+                (By.xpath("//*[@text='Allow']"), "Search Wikipedia", 5);
+
 
     }
 
@@ -35,7 +47,6 @@ public class FirstTest {
     public void tearDown() {
         driver.quit();
     }
-
 
     private WebElement waitForElement(By by, String error_message, int i) {
 
@@ -51,18 +62,11 @@ public class FirstTest {
         return element;
     }
 
-    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElement(by, error_message, (int) timeoutInSeconds);
+    private WebElement waitForElementAndSendKeys(By by, String value, long timeoutInSeconds) {
+        WebElement element = waitForElement(by, value, (int) timeoutInSeconds);
         element.sendKeys(value);
         return element;
 
-
-    }
-
-    private boolean webElementNotPresent(By by, String error_message, long timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
-        wait.withMessage(error_message + "\n");
-        return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
     private WebElement webElementPresent(By by, String error_message, long timeoutInSeconds) {
@@ -72,86 +76,207 @@ public class FirstTest {
     }
 
 
-    private WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElement(by, error_message, (int) timeoutInSeconds);
-        element.clear();
-        return element;
-    }
-
-    private WebElement assertElementHasText(By by, String expectedText, String error_message) {
-        WebElement element = waitForElement(by,error_message, 15);
-        element.getText();
-        return element;
+    private Boolean webElementNotPresent(By by, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 
     }
+
 
 
     @Test
-    public void checksLocatorText() {
-
-      assertElementHasText
-              (By.xpath("//*[@text='Search Wikipedia']"), "Search Wikipedia", "we see unexpected text");
-        WebElement title_element = waitForElement(
-                By.xpath("//*[@text='Search Wikipedia']"), "Cannot find article title", 15);
-        String element = title_element.getText();
-        Assert.assertEquals("We see unexpected title", "Search Wikipedia", element);
+    public void logInAndSee() {
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[1]"), "test3", 5);
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]"), "Aaaaa1", 5);
+        waitForElementAndClick
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.view.View/android.widget.Button"), "cannot find the element", 8);
+        waitForElementAndClick
+                (By.xpath("//*[@text='CANCEL']"), "cannot find this element", 10);
+        webElementPresent(
+                By.xpath("//*[@text='Tasks']"), "cannot find element", 10);
     }
-//    @Test
-//    public void firstTest() {
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[@text='Search Wikipedia']"), "cannot find element", 5);
-//        waitForElementAndSendKeys(
-//                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
-//        waitForElement(
-//                By.xpath("//*[@text='Object-oriented programming language']"), "Cannot find this element", 15);
-//    }
-//
-//
+
     @Test
-    public void cancelSearch() {
+    public void incorrectLogin() {
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[1]"), "wrongCreds", 5);
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]"), "wrongCreds", 5);
 
-
-        waitForElement(
-                By.id("org.wikipedia:id/search_container"), "cannot find element", 5);
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"), "cannot find element", 5);
-
-        waitForElementAndSendKeys(
-                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
+        waitForElementAndClick
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.view.View/android.widget.Button"), "cannot find the element", 8);
 
         webElementPresent(
-                By.id("org.wikipedia:id/page_list_item_description"), "cannot find element", 5);
+                By.xpath("//*[@text='Неверный логин или пароль']"), "cannot find element", 10);
 
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/search_close_btn"), "cannot find element", 5);
-
-        webElementNotPresent(
-                By.id("org.wikipedia:id/page_list_item_description"), "cannot find element", 5);
+        webElementPresent(
+                By.xpath("//*[@text='Connection error. Access denied.']"), "cannot find element", 10);
     }
 
     @Test
-    public void wordSearch() {
-        waitForElementAndClick(
-                By.xpath("//*[@text='Search Wikipedia']"), "cannot find element", 5);
-        waitForElementAndSendKeys(
-                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
+    public void canRevealPassword() {
 
-        WebElement element1 = waitForElement(
-               By.xpath("//*[@text='Java']"), "Cannot find article title", 15);
-        Assert.assertTrue(element1.getText().contains("Java"));
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]"), "password", 5);
 
-        WebElement element2 = waitForElement(
-                By.xpath("//*[@text='JavaScript']"), "Cannot find article title", 15);
-        Assert.assertTrue(element2.getText().contains("Java"));
+        waitForElementAndClick
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]/android.view.View/android.view.View/android.widget.CheckBox"), "cannot find the element", 5);
 
-        WebElement element3 = waitForElement(
-                By.xpath("//*[@text='Java (programming language)']"), "Cannot find article title", 15);
-        Assert.assertTrue(element3.getText().contains("Java"));
+        webElementPresent(
+                By.xpath("//*[@text='password']"), "cannot find element", 10);
+    }
+
+
+    @Test
+    public void logInAndCheckMainMenu() {
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[1]"), "test3", 5);
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]"), "Aaaaa1", 5);
+        waitForElementAndClick
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.view.View/android.widget.Button"), "cannot find the element", 8);
+        waitForElementAndClick
+                (By.xpath("//*[@text='CANCEL']"), "cannot find this element", 10);
+
+        waitForElementAndClick
+                (By.xpath("//android.view.View[@content-desc=\"Menu\"]"), "cannot find this element", 5);
+
+        webElementPresent(
+                By.xpath("//*[@text='Макаров Макар']"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='Data download history']"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='Change equipment state']"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='Emergency message']"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='Help']"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='About the app']"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='Main menu']"), "cannot find element", 10);
+
+        webElementNotPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.Button[2]"), "cannot find element", 5);
+
 
     }
 
-}
+    @Test
+    public void logInAndCheckMainButtons() {
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[1]"), "test3", 5);
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]"), "Aaaaa1", 5);
+        waitForElementAndClick
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.view.View/android.widget.Button"), "cannot find the element", 8);
+        waitForElementAndClick
+                (By.xpath("//*[@text='CANCEL']"), "cannot find this element", 10);
+        webElementPresent(
+                By.xpath("//android.view.View[@content-desc=\"Tasks\"]"), "cannot find element", 5);
+        webElementPresent(
+                By.xpath("//android.view.View[@content-desc=\"Defects\"]"), "cannot find element", 10);
 
+        webElementPresent(
+                By.xpath("//android.view.View[@content-desc=\"Education\"]"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//android.view.View[@content-desc=\"Menu\"]"), "cannot find element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='Current']"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("//*[@text='Archive']"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.Button[1]"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.Button[2]"), "cannot find element", 5);
+
+    }
+
+
+    @Test
+    public void logInAndCheckEducationTab() {
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[1]"), "test3", 5);
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]"), "Aaaaa1", 5);
+        waitForElementAndClick
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.view.View/android.widget.Button"), "cannot find the element", 8);
+        waitForElementAndClick
+                (By.xpath("//*[@text='CANCEL']"), "cannot find this element", 10);
+
+        waitForElementAndClick
+                (By.xpath("//android.view.View[@content-desc=\"Education\"]"), "cannot find this element", 10);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("//*[@text='Current']"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("//*[@text='Archive']"), "cannot find element", 5);
+        webElementNotPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.Button[2]"), "cannot find element", 5);
+
+    }
+
+
+    @Test
+    public void logInAndCheckDefectsTab() {
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[1]"), "test3", 5);
+        waitForElementAndSendKeys
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]"), "Aaaaa1", 5);
+        waitForElementAndClick
+                (By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.view.View/android.widget.Button"), "cannot find the element", 8);
+        waitForElementAndClick
+                (By.xpath("//*[@text='CANCEL']"), "cannot find this element", 10);
+
+        waitForElementAndClick
+                (By.xpath("//android.view.View[@content-desc=\"Defects\"]"), "cannot find this element", 10);
+
+        webElementPresent(
+                By.xpath("//*[@text='Get defects by equipments']"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("//*[@text='Defects are uploaded \n" +
+                        " by equipment in the task.\n" +
+                        " To upload defects by job \n" +
+                        " pull the screen down']"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.ScrollView/android.widget.ImageView"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("//*[@text='Add defect']"), "cannot find element", 5);
+
+        webElementPresent(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.Button"), "cannot find element", 5);
+
+    }
+}
 
 
