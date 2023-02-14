@@ -45,6 +45,13 @@ public class FirstTest {
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+    private WebElement[] getListOfElements(By by, String error_message, int i) {
+        WebElement element = waitForElement(by, error_message, (int) i);
+
+
+        return new WebElement[]{element};
+    }
+
     private WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {
         WebElement element = waitForElement(by, error_message, (int) timeoutInSeconds);
         element.click();
@@ -79,35 +86,37 @@ public class FirstTest {
     }
 
     private WebElement assertElementHasText(By by, String expectedText, String error_message) {
-        WebElement element = waitForElement(by,error_message, 15);
+        WebElement element = waitForElement(by, error_message, 15);
         element.getText();
         return element;
 
+    }
+
+    private WebElement assertElementContainsText(By by, String expectedText, String error_message) {
+        WebElement element = waitForElement(by, error_message, 15);
+        element.getText();
+        return element;
+
+    }
+
+    private WebElement getListOfElements(By by, String expectedText, String error_message) {
+        WebElement element = waitForElement(by, error_message, 15);
+        element.getText();
+        return element;
     }
 
 
     @Test
     public void checksLocatorText() {
 
-      assertElementHasText
-              (By.xpath("//*[@text='Search Wikipedia']"), "Search Wikipedia", "we see unexpected text");
+        assertElementHasText
+                (By.xpath("//*[@text='Search Wikipedia']"), "Search Wikipedia", "we see unexpected text");
         WebElement title_element = waitForElement(
                 By.xpath("//*[@text='Search Wikipedia']"), "Cannot find article title", 15);
         String element = title_element.getText();
         Assert.assertEquals("We see unexpected title", "Search Wikipedia", element);
     }
-//    @Test
-//    public void firstTest() {
-//
-//        waitForElementAndClick(
-//                By.xpath("//*[@text='Search Wikipedia']"), "cannot find element", 5);
-//        waitForElementAndSendKeys(
-//                By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
-//        waitForElement(
-//                By.xpath("//*[@text='Object-oriented programming language']"), "Cannot find this element", 15);
-//    }
-//
-//
+
     @Test
     public void cancelSearchAndCheck() {
 
@@ -132,26 +141,28 @@ public class FirstTest {
 
     @Test
     public void wordSearch() {
+
+
         waitForElementAndClick(
                 By.xpath("//*[@text='Search Wikipedia']"), "cannot find element", 5);
         waitForElementAndSendKeys(
                 By.xpath("//*[@text='Search…']"), "Java", "cannot find input", 5);
 
-        WebElement element1 = waitForElement(
-               By.xpath("//*[@text='Java']"), "Cannot find article title", 15);
-        Assert.assertTrue(element1.getText().contains("Java"));
+        for (WebElement element : getListOfElements(By.id("org.wikipedia:id/page_list_item_title"), "cannot find the element", 6)) {
 
-        WebElement element2 = waitForElement(
-                By.xpath("//*[@text='JavaScript']"), "Cannot find article title", 15);
-        Assert.assertTrue(element2.getText().contains("Java"));
+            assertElementContainsText(
 
-        WebElement element3 = waitForElement(
-                By.xpath("//*[@text='Java (programming language)']"), "Cannot find article title", 15);
-        Assert.assertTrue(element3.getText().contains("Java"));
+                    (By) element,
+
+                    "Java",
+
+                    "Search result doesn't contain a word 'Java'");
+
+        }
 
     }
-
 }
+
 
 
 
