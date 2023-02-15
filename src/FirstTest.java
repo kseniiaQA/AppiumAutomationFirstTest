@@ -34,7 +34,7 @@ public class FirstTest {
         capabilities.setCapability("app", "C:/Users/kalekseenko/JavaAppiumAutomation/apks/org.wikipedia.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-
+        driver.rotate(ScreenOrientation.PORTRAIT);
     }
 
     @After
@@ -345,7 +345,7 @@ public class FirstTest {
                     By.xpath(title1), "cannot find the element", 5);
 
             String title2 = "//*[@text='Appius Claudius Caecus']";
-
+            driver.rotate(ScreenOrientation.LANDSCAPE);
             waitForElementAndClick(
                     By.xpath(title2), "cannot find my article in My list", 5);
 
