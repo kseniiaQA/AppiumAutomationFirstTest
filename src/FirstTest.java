@@ -182,6 +182,14 @@ public class FirstTest {
         return element.getAttribute(attribute);
     }
 
+
+    private void assertElementPresent(By by, String error_message) {
+        int amount_of_elements = getAmountOfElements(by);
+        if (amount_of_elements < 0) {
+            String message = "an element " + by.toString() + "supposed to be present";
+            throw new AssertionError(message + "" + error_message);
+        }
+
 //
 //    @Test
 //    public void checksLocatorText() {
@@ -260,112 +268,113 @@ public class FirstTest {
 //
 //    }
 
+    }
+        @Test
+        public void saveArticlesToMyListDeleteAndCheckTitles () {
 
-    @Test
-    public void saveArticlesToMyListDeleteAndCheckTitles() {
+            waitForElement(
+                    id("org.wikipedia:id/search_container"), "cannot find element", 5);
+            waitForElementAndClick(
+                    id("org.wikipedia:id/search_container"), "cannot find element", 5);
 
-        waitForElement(
-                id("org.wikipedia:id/search_container"), "cannot find element", 5);
-        waitForElementAndClick(
-                id("org.wikipedia:id/search_container"), "cannot find element", 5);
+            waitForElementAndSendKeys(
+                    id("org.wikipedia:id/search_src_text"), "Appium", "cannot find input", 5);
 
-        waitForElementAndSendKeys(
-                id("org.wikipedia:id/search_src_text"), "Appium", "cannot find input", 5);
+            waitForElementAndClick(
+                    By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout[2]/android.view.ViewGroup/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.FrameLayout/android.view.View"), "cannot find element", 5);
 
-        waitForElementAndClick(
-                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout[2]/android.view.ViewGroup/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.FrameLayout/android.view.View"), "cannot find element", 5);
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageView[@content-desc=\"More options\"]"), "cannot find element", 5);
 
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc=\"More options\"]"), "cannot find element", 5);
+            waitForElementAndClick(
+                    By.xpath("//*[@text='Add to reading list']"), "cannot find element to add article to a list", 5);
 
-        waitForElementAndClick(
-                By.xpath("//*[@text='Add to reading list']"), "cannot find element to add article to a list", 5);
+            waitForElementAndClick(
+                    id("org.wikipedia:id/onboarding_button"), "cannot find element overlay", 5);
 
-        waitForElementAndClick(
-                id("org.wikipedia:id/onboarding_button"), "cannot find element overlay", 5);
+            waitForElementAndClear(
+                    id("org.wikipedia:id/text_input"), "cannot find element to clear the input", 5);
 
-        waitForElementAndClear(
-                id("org.wikipedia:id/text_input"), "cannot find element to clear the input", 5);
+            waitForElementAndSendKeys(
+                    id("org.wikipedia:id/text_input"), "My folder", "cannot find the input", 5);
 
-        waitForElementAndSendKeys(
-                id("org.wikipedia:id/text_input"), "My folder", "cannot find the input", 5);
-
-        waitForElementAndClick(
-                id("android:id/button1"), "cannot find element to go to main page", 5);
-
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"), "cannot find element to navigate to my list", 5);
+            waitForElementAndClick(
+                    id("android:id/button1"), "cannot find element to go to main page", 5);
 
 
-        waitForElement(
-                id("org.wikipedia:id/search_container"), "cannot find element", 5);
-        waitForElementAndClick(
-                id("org.wikipedia:id/search_container"), "cannot find element", 5);
-
-        waitForElementAndSendKeys(
-                id("org.wikipedia:id/search_src_text"), "Appium", "cannot find input", 5);
-
-        waitForElementAndClick(
-                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout[2]/android.view.ViewGroup/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.FrameLayout[2]/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]"), "cannot find element to navigate to my list", 5);
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"), "cannot find element to navigate to my list", 5);
 
 
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc=\"More options\"]"), "cannot find element", 5);
+            waitForElement(
+                    id("org.wikipedia:id/search_container"), "cannot find element", 5);
+            waitForElementAndClick(
+                    id("org.wikipedia:id/search_container"), "cannot find element", 5);
 
-        waitForElementAndClick(
-                By.xpath("//*[@text='Add to reading list']"), "cannot find element to add article to a list", 5);
+            waitForElementAndSendKeys(
+                    id("org.wikipedia:id/search_src_text"), "Appium", "cannot find input", 5);
 
-        waitForElementAndClick(
-                By.xpath("//*[@text='My folder']"), "cannot find element overlay", 5);
+            waitForElementAndClick(
+                    By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout[2]/android.view.ViewGroup/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.FrameLayout[2]/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]"), "cannot find element to navigate to my list", 5);
 
 
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"), "cannot find element to go to main page", 5);
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageView[@content-desc=\"More options\"]"), "cannot find element", 5);
 
-        waitForElementAndClick(
-                By.xpath("//android.widget.FrameLayout[@content-desc=\"My lists\"]/android.widget.ImageView"), "cannot find element navigate to my list", 5);
+            waitForElementAndClick(
+                    By.xpath("//*[@text='Add to reading list']"), "cannot find element to add article to a list", 5);
 
-        waitForElementAndClick(
-                By.xpath("//*[@text= 'My folder']"), "cannot find my article in My list", 5);
+            waitForElementAndClick(
+                    By.xpath("//*[@text='My folder']"), "cannot find element overlay", 5);
 
-        swipeUpElementToLeft(
-                By.xpath("//*[@text='Appium']"), "cannot delete my article in My list");
-        String title1 = "//*[@text='Appius Claudius Caecus']";
 
-        webElementPresent(
-                By.xpath(title1), "cannot find the element", 5);
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"), "cannot find element to go to main page", 5);
 
-        String title2 = "//*[@text='Appius Claudius Caecus']";
+            waitForElementAndClick(
+                    By.xpath("//android.widget.FrameLayout[@content-desc=\"My lists\"]/android.widget.ImageView"), "cannot find element navigate to my list", 5);
 
-        waitForElementAndClick(
-                By.xpath(title2), "cannot find my article in My list", 5);
+            waitForElementAndClick(
+                    By.xpath("//*[@text= 'My folder']"), "cannot find my article in My list", 5);
 
-        Assert.assertEquals("titles are not the same", title1, title2);
+            swipeUpElementToLeft(
+                    By.xpath("//*[@text='Appium']"), "cannot delete my article in My list");
+            String title1 = "//*[@text='Appius Claudius Caecus']";
 
+            webElementPresent(
+                    By.xpath(title1), "cannot find the element", 5);
+
+            String title2 = "//*[@text='Appius Claudius Caecus']";
+
+            waitForElementAndClick(
+                    By.xpath(title2), "cannot find my article in My list", 5);
+
+            Assert.assertEquals("titles are not the same", title1, title2);
+
+        }
+
+
+        @Test
+        public void assertTitleIsPresent () {
+            waitForElement(
+                    id("org.wikipedia:id/search_container"), "cannot find element", 5);
+            waitForElementAndClick(
+                    id("org.wikipedia:id/search_container"), "cannot find element", 5);
+
+            waitForElementAndSendKeys(
+                    id("org.wikipedia:id/search_src_text"), "Appium", "cannot find input", 5);
+
+            waitForElementAndClick(
+                    By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout[2]/android.view.ViewGroup/android.support.v4.view.ViewPager/android.view.ViewGroup/android.widget.FrameLayout/android.view.View"), "cannot find element", 5);
+
+            assertElementPresent(
+                    By.id("org.wikipedia:id/view_page_title_text"), "the element supposed to be here");
+
+        }
     }
 
-}
 
-//    @Test
-//    public void assertSearchNotEmpty() {
-//        waitForElement(
-//                id("org.wikipedia:id/search_container"), "cannot find element", 5);
-//        waitForElementAndClick(
-//                id("org.wikipedia:id/search_container"), "cannot find element", 5);
-//        String value = "Linkin Park discography";
-//        waitForElementAndSendKeys(
-//                id("org.wikipedia:id/search_src_text"), value, "cannot find input", 5);
-//
-//        webElementPresent(
-//                id("org.wikipedia:id/page_list_item_container"), "cannot find element", 5);
-//
-//        int amount_of_search_results = getAmountOfElements(
-//                id("org.wikipedia:id/page_list_item_container"));
-//
-//        Assert.assertTrue("there are no results", amount_of_search_results > 0);
-//
-//    }
+
 //
 //    @Test
 //    public void amountOfEmptySearchResults() {
